@@ -12,8 +12,7 @@ import { FaGithub } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 import { IoSearchSharp } from "react-icons/io5";
-import AboutMe from "./Aboutme";
-
+import AboutMe from "./AboutMe"; // If the file is named AboutMe.jsx
   const file =()=>{
     document.getElementById("files").classList.toggle('hidden')
   }

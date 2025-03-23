@@ -33,7 +33,7 @@ console.log(amount)
   const loadClientSecret = async () => {
     setLoading(true); // Show loading indicator
     try {
-      const { data } = await axios.post('http://localhost:1000/payment', {
+      const { data } = await axios.post('https://devias.onrender.com/payment', {
         amountofmoney: parseFloat(amount), // Ensure amount is sent as a number
       });
       if (!data.clientSecret) {

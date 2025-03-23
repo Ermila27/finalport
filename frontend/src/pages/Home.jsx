@@ -4,7 +4,7 @@
   import { useEffect,useRef,useState } from 'react'
   import gsap from "gsap";
 import Layout from '../component/Layout';
-  import FireRain from '../component/FireRain'
+import FireRain from '../component/FireRain'
 import Landing from '../component/Landing'
 import TechStack from '../component/TechStack'
 import ScrollProgressBa from '../component/ScrollProgressBar'
