@@ -1,16 +1,13 @@
 import React, { Children } from 'react'
 import Nav from './nav/Nav'
 import Buy from './Buy'
-import FireRain from './FireRain'
-
+import FuturisticFooter from './FuturisticFooter'
 const Layout = ({children}) => {
   return (
     <div>
       <Nav/>
-      <FireRain/>
       {children}
-      <Buy/>
-
+<FuturisticFooter/>
     </div>
   )
 }

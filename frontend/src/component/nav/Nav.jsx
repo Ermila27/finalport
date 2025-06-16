@@ -1,275 +1,227 @@
-import { useState,useRef,useEffect } from 'react';
-import { CircleLoader, ClockLoader} from 'react-spinners';
-import {NavLink, useNavigate} from 'react-router-dom'
-import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import RoofingSharpIcon from '@mui/icons-material/RoofingSharp';
-import CancelSharpIcon from '@mui/icons-material/CancelSharp';
-import DialpadIcon from '@mui/icons-material/Dialpad';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import   AccountCircleSharpIcon from '@mui/icons-material/AccountTree';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import ReactDOM from "react-dom";
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import { FaMoon } from "react-icons/fa";
-import { dark } from '@mui/material/styles/createPalette';
-import { FiSun } from "react-icons/fi";
+import { useState, useRef, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  SearchSharp,
+  CloseSharp,
+  HomeSharp,
+  PersonSharp,
+  WorkSharp,
+  LinkSharp,
+  CallSharp,
+  LightMode,
+  DarkMode
+} from '@mui/icons-material';
+
 const Nav = () => {
-  const navigatte=useNavigate();
-  const [isdark,setisdark]=useState(true);
-  const nav=[
-    
-    {
-    name:'home',icon: <RoofingSharpIcon/>,
-    },
-    {
-      name:'About',icon:  <AccountCircleSharpIcon/>,
-      }, {
-        name:'project',icon: <AccountTreeIcon/>,
-        }, {
-          name:'payment',icon: <RoofingSharpIcon/>,
-          }, {
-            name:'contact',icon: <DialpadIcon/>,
-            },
+  const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHoveringLogo, setIsHoveringLogo] = useState(false);
+  const inputRef = useRef(null);
 
+  const navItems = [
+    { name: 'home', path: '/', icon: <HomeSharp /> },
+    { name: 'about', path: '/about', icon: <PersonSharp /> },
+    { name: 'projects', path: '/projects', icon: <WorkSharp /> },
+    { name: 'contact', path: '/contact', icon: <CallSharp /> },
+    { name: 'links', path: '/blog', icon: <LinkSharp /> }
+  ];
 
-]
+  const filteredItems = navItems.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
+  const toggleTheme = () => {
+    document.documentElement.classList.toggle("dark");
+    setIsDark(!isDark);
+  };
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const filteredItems = nav.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() === '') return;
+
+    const foundItem = navItems.find(item =>
+      item.name.toLowerCase() === searchTerm.toLowerCase()
     );
-    
-    const inputref=useRef(null)
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleMenu = () => {
 
-        setIsOpen(!isOpen);
-        if(inputref.current){
-          inputref.current.focus()
-
-        }
-
-      };
-      useEffect(() => {
-        if (isOpen && inputref.current) {
-          inputref.current.focus();
-        }
-      }, [isOpen]);
-   const displaymenu=()=>{
-     const a=document.getElementById('menu');
-      a.classList.remove("hidden")
-   }
-   const remove=()=>{
-    const a=document.getElementById('menu');
-     a.classList.add("hidden")
-  }
-
- const toogletheme=()=>{
- document.documentElement.classList.toggle("dark")
-    setisdark(!isdark)
- }
- const navv=()=>{
-  setIsOpen(!isOpen);
-
-
- }    
-  const submit=(e)=>{
-    e.preventDefault()
-    setIsOpen(false)
-    if(inputref.current.value=='home'){
-      navigatte('/')
-
-    }else if(inputref.current.value=='about'){
-      navigatte('about')
-    }else if(inputref.current.value=='project'){
-      navigatte('about')
-    }else if(inputref.current.value=='contact'){
-      navigatte('about')
-    }else{
-      navigatte('/')
+    if (foundItem) {
+      navigate(foundItem.path);
+      setIsMenuOpen(false); // Close menu after navigation
+      setSearchTerm("");
     }
+  };
 
-    
-  }
-    
+  useEffect(() => {
+    if (isMenuOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isMenuOpen]);
 
   return (
-    
-    
-     <div  className=" sticky top-0  bg-[url(/blur1.avif)] z-40  bg-cover" >
+    <header className="sticky top-0 z-50 backdrop-blur-2xl bg-black/50 border-b border-white/10">
 
-        <nav  className=" top-0 left-0 w-full  backdrop-blur-lg    p-4 shadow-lg z-50">
-      <div   className="flex justify-between items-center max-w-screen-xl mx-auto">
-        
-        {/* Logo */}
-        <div onMouseOver={displaymenu} onMouseLeave={remove} className="h-12 group ">
-        <div    className=" group text-white  ">
-          <img src="/favicon.ico" alt="" className='' />
-          <div  className="  flex   text-white text-opacity-70 ">
-           {/* {loading?<div><CircleLoader/></div>:<div></div>} */}
-   <div id="menu" className=" group-hover:block  hidden h-36 absolute z-50   top-18   sm:top-14 w-36  justify-center items-center  rounded  bg-gray-900 shadow-lg shadow-purple-600">
-  <a  href="https://drive.google.com/file/d/1PxRjrZYzmkhSQYnNrUpqer1HM_UWgdHT/view?usp=drive_link" target="blank"  className=" flex m-4 justify-center items-center bg-black border-2 border-gray-600 p-1 rounded-2xl bottom-4 hover:border-blue-700 transition ">download cv  </a>
-       </div>
-
- </div>
-
-
-        </div>
-        </div>
-   
-      
-
-       <div className=' border border-white/30 rounded-xl bg-cove flex justify-center items-center '>
-       <div className='backdrop-blur-lg hidden rounded-xl bg-white/10 justify-center items-center   text-white text-opacity-60  sm:flex gap-4 px-6   '>
-        
-       <NavLink to={'/'} name="about"   className={({ isActive }) =>
-    `px-3 py-2 rounded-md transition hover:scale-110 duration-300 ease-in-out ${
-      isActive ? "text-white border-b-2 border-red-300" : "text-white/60"
-    }` }>
-            Home
-          </NavLink>
-
-
-          <NavLink to={'/about'} name="about"   className={({ isActive }) =>
-    `px-3 py-2 rounded-md transition hover:scale-110 duration-300 ease-in-out ${
-      isActive ? " border-b-2 border-red-300 text-white" : "text-white/60"
-    }` }>
-            About
-          </NavLink>
-
-
-                  <NavLink to={'/project'} name="about"   className={({ isActive }) =>
-    `px-3 py-2 rounded-md transition hover:scale-110 duration-300 ease-in-out ${
-      isActive ? " border-b-2 border-red-300 text-white" : "text-white/60"
-    }` }>
-            projects
-          </NavLink>
-
-          <NavLink to={'/contact'} name="about"   className={({ isActive }) =>
-    `px-3 py-2 rounded-md transition duration-300 hover:scale-110 ease-in-out ${
-      isActive ? " border-b-2 border-red-300 text-white" : "text-white/60"
-    }` }>
-            contact
-          </NavLink>
-
-
-
-          <NavLink to={'/payment'} name="about"   className={({ isActive }) =>
-    `px-3 py-2 rounded-md transition duration-300 hover:scale-110 ease-in-out ${
-      isActive ? " border-b-2 border-red-300 text-white" : "text-white/60"
-    }` }>
-            links
-          </NavLink>
-
-         
-        </div>
-       </div>
-          
- 
-      
-          
-       
-        
-
-
-        {/* Hamburger Menu Icon: Only visible on small screens */}
-       <button className="block mr-8 hover:scale-110 transition-all duration-200 " onClick={toggleMenu}>
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo with hover effect */}
           <div
-            className={`w-6 h-0.5  bg-white/80 mb-1 transition-all hover:bg-white duration-300 ${
-              isOpen ? "rotate-45 translate-y-2" : ""
-            }`}></div>
-          <div
-            className={`w-6 h-0.5 bg-white/80 mb-1 transition-all duration-300 ${
-              isOpen ? "opacity-0" : ""
-            }`}></div>
-          <div
-            className={`w-6 h-0.5 mb-1  bg-white/80 transition-all duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}></div>
-        </button>
+            className="flex items-center"
+            onMouseEnter={() => setIsHoveringLogo(true)}
+            onMouseLeave={() => setIsHoveringLogo(false)}
+          >
+            <motion.div
+              className="relative"
+              whileHover={{ scale: 1.05 }}
+            >
+              <img
+                src="/favicon.ico"
+                alt="Logo"
+                className="h-10 w-10"
+              />
 
+              <AnimatePresence>
+                {isHoveringLogo && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-40 bg-gray-900/95 backdrop-blur-sm rounded-lg shadow-lg shadow-purple-500/30 p-2 z-50"
+                  >
+                    <a
+                      href="https://drive.google.com/file/d/1PxRjrZYzmkhSQYnNrUpqer1HM_UWgdHT/view?usp=drive_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 px-3 py-2 text-sm text-white/90 hover:text-white transition-colors border border-white/10 hover:border-purple-400/50 rounded-md"
+                    >
+                      Download CV
+                    </a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
 
-        <button onClick={toogletheme} className='absolute sm:right-20 right-32'>
-          {isdark?<FiSun className='sm:text-xl  dark:text-white' />:<FaMoon className='text-orange-300 font-bold sm:text-xl' />
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.name}
+                to={item.path}
+                className={({ isActive }) => `
+                  relative px-4 py-2 text-sm font-medium rounded-lg
+                  transition-all duration-300
+                  ${isActive
+                    ? "text-white bg-gradient-to-r from-purple-500/20 to-blue-500/20"
+                    : "text-white/70 hover:text-white hover:bg-white/5"
+                  }
+                `}
+              >
+                {({ isActive }) => (
+                  <>
+                    <span className="flex items-center gap-2">
+                      {item.icon}
+                      {item.name}
+                    </span>
+                    {isActive && (
+                      <motion.span
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400"
+                        layoutId="navUnderline"
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
 
-          }
+          {/* Right side controls */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDark ? (
+                <LightMode className="text-yellow-300" />
+              ) : (
+                <DarkMode className="text-gray-700" />
+              )}
+            </button>
 
-        </button>
-         
-      
-      </div>
+            {/* Mobile menu button (CSS-only Burger/Close Animation) */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors w-10 h-10 flex flex-col justify-center items-center space-y-1.5"
+              aria-label="Toggle menu"
+            >
+              <span
+                className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}
+              />
+              <span
+                className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}
+              />
+              <span
+                className={`block h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}
+              />
+            </button>
+          </div>
+        </div>
+      </nav>
 
+      {/* Mobile Menu (Vertical Dropdown) */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }} // Use 'auto' for height animation
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            // Position fixed to layer over content below, right below the header
+            className="md:hidden fixed top-16 left-0 right-0 z-40 bg-gray-900/95 backdrop-blur-lg shadow-xl border-t border-white/10 overflow-hidden"
+          >
+            <div className="p-4">
+              <form onSubmit={handleSearchSubmit} className="relative mb-6">
+                <input
+                  type="text"
+                  ref={inputRef}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </form>
 
-      {isOpen &&
-        ReactDOM.createPortal(
-          <div>
-          <div className="fixed inset-0 flex z-50 justify-center items-center backdrop-blur-sm bg-[url(/blur.avi)] bg-cover bg-opacity-40  text-white">
-
-               <div className="bg-[url(/blur1.avif)]  backdrop-blur-md p-5 rounded-lg max-w-md w-full max-h-[90vh] ">
-               <button className='absolute  right-1 top-0 text-white ' onClick={toggleMenu} ><CancelSharpIcon/></button>
-
-   <form onSubmit={(e)=>{submit(e)}} className="relative sm:flex hidden items-center">
-  <input  
-   value={searchTerm}
-   onChange={(e) => setSearchTerm(e.target.value)}
-    type="text"
-    ref={inputref}
-    placeholder="Search..."
-    className="w-full  px-2 py-1 mt-2 rounded-full outline-none bg-white/40 text-white/90 border-white border "
-  />
-  <button type='submit' className="absolute top-3 right-2 text-center bg-gray-100   text-black px-2 hover:bg-black hover:text-white hover:scale-110 transition-all duration-300 rounded-full">
-  <SearchSharpIcon/>
-  </button>
-</form>
-<div className=''>
-
-  
-{  filteredItems.length>0? filteredItems.map((data,index)=>(
-  <div className='w-full ' key={index}>
-    <NavLink to={`${data.name=='home'?'/':data.name}`} onClick={navv} className='flex opacity-80 mt-3 hover:opacity-100 hover:bg-black/50 hover:rounded-xl  px-1 transition-all duration-300'>
-    <button className='w-8'>
-    {data.icon}
-
-    </button>
-    <div>
-      
-    <p>{data.name}</p>
-    <p className='text-xs'>welocme to my forever work progres</p>
-      </div>
-    
-    </NavLink> 
-  
-    
-  
-
-
-  </div>
-)):<div className='flex justify-center items-center '>
-  <p className='text-xs bg-black py-2 '>No search result
-  </p>
-  <div className='absolute bottom-1  flex  gap-2 left-3'>
-  <GitHubIcon sx={{ fontSize: 20 }} />
-<AlternateEmailIcon sx={{ fontSize: 20 }} />
-  </div>
-  
-  </div>}
-
-</div>
-
-               </div>
-             </div>
-             </div>,          document.body // Render outside of the parent component
+              <div className="space-y-2">
+                {filteredItems.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.path}
+                    onClick={toggleMenu}
+                    className={({ isActive }) => `
+                      flex items-center gap-3 px-4 py-3 rounded-lg
+                      transition-colors duration-200
+                      ${isActive
+                        ? 'bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-white'
+                        : 'text-white/70 hover:text-white hover:bg-white/5'
+                      }
+                    `}
+                  >
+                    <span className="text-white/80">{item.icon}</span>
+                    <span className="capitalize">{item.name}</span>
+                  </NavLink>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         )}
-
-    </nav>
- 
-     </div>
-
-
-
-    
+      </AnimatePresence>
+    </header>
   );
 };
 

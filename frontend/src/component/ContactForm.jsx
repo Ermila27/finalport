@@ -1,144 +1,141 @@
 import axios from "axios";
 import React, { useState } from "react";
 import emailjs from 'emailjs-com';
-
 import { PacmanLoader } from 'react-spinners';
 import { FcHome } from "react-icons/fc";
 import { NavLink } from "react-router-dom";
 import Nav from "./nav/Nav";
+
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-const [sucss,setsucss]=useState(null)
-  // Handle form input changes
+  const [sucss, setsucss] = useState(null);
+
   const handleChange = (e) => {
-    setError("")
+    setError("");
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };   
-
-     
-
-  // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-       setIsSubmitting(true);
-        setError("")
-        const {name,email,message}=formData;
-        emailjs.send('service_hpq6w56','template_raxuxgs',{
-          name:name,
-          email:email,
-          message:message
-        },
-        'uil1F4mhPg9r7JoDx')
-        .then((res)=>{
-          setsucss("thank you for your contact ")
-          setIsSubmitting(false);
-          setTimeout(() => {
-            setsucss("");
-            setFormData({ name: "", email: "", message: "" }); // Reset form fields
-    
-          }, 2000);
-    
-        }).catch((err)=>{
-            console.log(err);
-    if (err.message && err.message.includes('status code 500')) {
-      setError("Oops! Something went wrong.");
-  } else {
-      setError(err.message || "An unknown error occurred.");
-  }
-
-setFormData({ name: "", email: "", message: "" }); // Reset form fields
-setIsSubmitting(false)
-          
-        })
   };
 
-  // Validation for empty fields
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+    const { name, email, message } = formData;
+
+    emailjs.send('service_hpq6w56', 'template_raxuxgs', {
+      name: name,
+      email: email,
+      message: message
+    }, 'uil1F4mhPg9r7JoDx')
+    .then(() => {
+      setsucss("Thank you for your contact.");
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setsucss("");
+        setFormData({ name: "", email: "", message: "" });
+      }, 2000);
+    })
+    .catch((err) => {
+      console.log(err);
+      if (err.message && err.message.includes('status code 500')) {
+        setError("Oops! Something went wrong.");
+      } else {
+        setError(err.message || "An unknown error occurred.");
+      }
+      setFormData({ name: "", email: "", message: "" });
+      setIsSubmitting(false);
+    });
+  };
+
   const isFormValid = formData.name && formData.email && formData.message;
 
   return (
+    <div className="w-full min-h-scren max-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-gray-800 px-4 py-12">
+      <div className="w-full max-w-6xl bg-white/10 backdrop-blur-lg shadow-2xl rounded-xl p-6 border border-white/20 text-white grid md:grid-cols-2 gap-10">
+        <h2 className="text-3xl font-bold text-center md:col-span-2 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+          Let's Talk
+        </h2>
 
+        {error && (
+          <div className="bg-red-400/20 text-red-300 text-sm p-3 mb-4 rounded-md">
+            {error}
+          </div>
+        )}
 
+        {sucss && (
+          <div className="bg-green-400/20 text-green-300 text-sm p-3 mb-4 rounded-md">
+            {sucss}
+          </div>
+        )}
 
-           <div className=" dark:bg-black w-full flex justify-center items-center">
-           <div  className=" py-8 bg-slate-200  dark:bg-black w-full  justify-center items-center">
-
-           <div id="ans" className="w-full    max-w-lg p-6 mx-auto   bg-black text-white shadow-lg rounded-xl border-2 border-gray-700">
-      <h2 className="text-2xl font-bold text-center text-white mb-4">Contact Me</h2>
-      {error && (
-        <div className="bg-red-200 text-red-600 p-2 mb-2 rounded">
-          <p>{error}</p>
-        </div>
-      )}
-       {sucss && (
-        <div className="bg-green-200 text-green-700 text-opacity-45 p-3 mb-4 rounded">
-          <p>{sucss}</p>
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+        <form onSubmit={handleSubmit} className="space-y-5 order-2 md:order-1">
           <input
             type="text"
-            id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-2 mt-2 border rounded-md border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-            placeholder="Enter your name"
+            placeholder="Your Name"
+            className="w-full px-4 py-3 rounded-md bg-black/30 border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <div>
           <input
             type="email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-2 mt-2 border rounded-md border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
-            placeholder="Enter your email"
+            placeholder="Your Email"
+            className="w-full px-4 py-3 rounded-md bg-black/30 border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <div>
           <textarea
-            id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-4 py-2 mt-2 border rounded-md border-gray-600 bg-gray-800 text-white focus:outline-none  focus:border-red-400 transition duration-200"
-            placeholder="Write your message here"
-            rows="5"
-          />
-        </div>
+            placeholder="Your Message"
+            rows="3"
+            className="w-full px-4 py-3 rounded-md bg-black/30 border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          ></textarea>
 
-
-        <div className="flex justify-center mt-6">
           <button
             type="submit"
             disabled={!isFormValid || isSubmitting}
-            className={`w-full py-2 px-4 text-white flex justify-center items-center font-semibold rounded-md transition duration-300 ${
+            className={`w-full py-3 px-6 font-semibold rounded-md transition-all duration-300 ${
               isSubmitting || !isFormValid
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500"
             }`}
           >
-          {isSubmitting ? <PacmanLoader size={12} color={"white"}/>  : <div className="h-8  flex justify-center items-center w-fit ">send</div>}
+            {isSubmitting ? <PacmanLoader size={12} color="white" /> : "Send Message"}
           </button>
+        </form>
+
+        <div className="order-1 md:order-2 flex flex-col justify-center space-y-6">
+          <h3 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+            Open to Collaborations
+          </h3>
+          <p className="text-white/80 text-sm leading-relaxed">
+            I’m always excited to hear about new ideas, freelance opportunities, and product visions. Let’s build something impactful together.
+          </p>
+          <div className="flex gap-4">
+            <a
+              href="mailto:ermiasgetnet677@gmail.com"
+              className="px-4 py-2 border border-white/20 rounded-md hover:bg-white/10 transition text-white text-sm"
+            >
+              Email Me
+            </a>
+            <NavLink to="/projects"
+              
+              className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-md text-sm hover:scale-105 transition"
+            >
+              View Work
+            </NavLink>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
-
-</div>
-
-           </div>
-     );
+  );
 };
 
 export default ContactForm;

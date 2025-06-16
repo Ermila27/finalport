@@ -49,9 +49,13 @@ icon: '🚀',
   
  export const projectsdata = [
     {
+      id:1,
+      catagory:"AI",
       title: "Amazon Clone",
       description: "A fully functional Amazon clone with React, Node.js, and MongoDB.",
       image: amazon,
+      tags: ["React", "Node.js", "WebSockets"],
+
       link: "https://your-live-project-link.com",
       github: "https://github.com/your-username/amazon-clone",
       subdescribtion:['Real-time product search and filtering for a seamless shopping experience',
@@ -60,9 +64,13 @@ icon: '🚀',
         "Order summary and payment integration for easy checkout and transaction processing."
       ],
       color:"#4A1229",
+            accentColor: "#fffff" ,// Blue
+
       text_color:'darkred'
     },
     {
+      id:2,
+      catagory:"WEB",
       title: "text-to image generater",
       description: "A powerful AI-based tool that transforms text descriptions into high-quality images.",
       subdescribtion:["Generates high-quality images from user-inputted text descriptions using AI models"
@@ -71,17 +79,24 @@ icon: '🚀',
         "Customizable outputs allowing users to tweak parameters like size and style."
       ],
       image: ai,
+     tags: ["React", "Node.js", "WebSockets"],
+
       link: "https://your-live-project-link.com",
       github: "https://github.com/your-username/currency-converter",
-      color:"#102F23"
-      ,
+      color:"#102F23",
+            accentColor: "#3b82f6" // Blue
+,
       text_color:'green'
     },
 
    
     {
+      id:3,
+      catagory:"XR",
       title: "Portfolio Web",
       image:portfolio,
+      tags: ["React", "Node.js", "WebSockets"],
+
       description: "A personal portfolio showcasing my projects, skills, and experience in web development.",
       subdescribtion: [
         "Responsive design for mobile and desktop devices.",
@@ -89,10 +104,34 @@ icon: '🚀',
         "Built with modern web technologies like React, Node.js, and Tailwind CSS.",
         "Clean, intuitive user interface with a focus on user experience (UX)."
       ],
-      color:"#301B55"
-      ,
+      color:"#301B55",
+     accentColor: "#3b82f6", // Blue
+
+      
+      text_color:'purple'
+    },
+     {
+      id:3,
+      catagory:"XR",
+      title: "Portfolio Web",
+      image:portfolio,
+      tags: ["React", "Node.js", "WebSockets"],
+
+      description: "A personal portfolio showcasing my projects, skills, and experience in web development.",
+      subdescribtion: [
+        "Responsive design for mobile and desktop devices.",
+        "Projects include e-commerce sites, blogs, and dynamic web applications.",
+        "Built with modern web technologies like React, Node.js, and Tailwind CSS.",
+        "Clean, intuitive user interface with a focus on user experience (UX)."
+      ],
+      color:"#301B55",
+     accentColor: "#3b82f6", // Blue
+
+      
       text_color:'purple'
     }
+    ,
+    
     
     
 
